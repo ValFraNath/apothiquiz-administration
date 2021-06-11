@@ -1,0 +1,75 @@
+#flex{
+  display: flex;
+  flex-direction:column;
+  align-items:center;
+
+  h1{
+    font-size:40px;
+    padding-top:10px;
+  }
+
+  h2{
+    font-size:30px;
+  }
+
+  #grid{
+    width:50%;
+    height:500px;
+  }
+
+  input{
+    width:25%;
+  }
+  #valider,#class, #addM {
+    margin: 15px;
+    font-size: 18px;
+    height: 30px;
+    width: 150px;
+    border-radius: 10px;
+    box-shadow: 1px 1px 0px 2px rgba (0,0,0,0.3);
+    color:white;
+    background: #6495ED;
+    cursor: pointer;
+  }
+
+  #class{
+    font-size:14px;
+    width:200px;
+    background: grey;
+  }
+
+  #addM{
+    margin-top:25px;
+    font-size:14px;
+    width:200px;
+  }
+
+  #delete{
+    margin-left:10%;
+    color:red;
+  }
+}
+
+img{
+  margin-top:10%;
+  margin-left:25%;
+  position:absolute;
+  width:20%;
+}
+
+a{
+  color:#FFF;
+}
+
+select {
+  font-size:15px;
+  margin-top:10px;
+  margin-bottom:10px;
+  width:15%;
+  border: 1px solid grey;
+  border-radius: 0.25em;
+  padding: 0.5em 0.5em;
+  cursor: pointer;
+  line-height: 1.1;
+  background-color: #fff;
+}

@@ -1,0 +1,63 @@
+#createM {
+  max-width:80%;
+  	margin:0 auto;
+    width:100%;
+  h1{
+    text-align:center;
+    margin-bottom:40px;
+  }
+  label{
+    margin-left:32%;
+    display:block;
+  }
+  input,select{
+    margin-left:32%;
+    margin-bottom:30px;
+    width:35%;
+  }
+  input[type=file]{
+    padding-top:20px;
+  }
+  #choose,#prop,#ok{
+    margin: 15px;
+    font-size: 15px;
+    height: 30px;
+    width: 100px;
+    border-radius: 10px;
+    box-shadow: 1px 1px 0px 2px rgba (0,0,0,0.3);
+    color:white;
+    background: grey;
+    cursor: pointer;
+  }
+  #ok{
+    background:#6495ED;
+  }
+  #prop{
+    margin-left:32%;
+    display:block;
+  }
+  #cancel{
+    margin-top:5%;
+    margin-left:43%;
+    font-size: 15px;
+    height: 30px;
+    width: 100px;
+    border-radius: 10px;
+    box-shadow: 1px 1px 0px 2px rgba (0,0,0,0.3);
+    color:white;
+    background: red;
+    cursor: pointer;
+  }
+  img{
+    margin-top:10px;
+    margin-left:32%;
+    position:relative;
+  }
+  a{
+    text-decoration:none;
+  }
+  p{
+    margin-left:32%;
+    font-weight:bold;
+  }
+}
