@@ -1,5 +1,7 @@
 import axios from "axios";
 
+import Auth from "./authentication";
+
 /**GET*/
 export async function getChemicalProperty(){
   let { data } = await axios.get("/api/v1/chemicals/property");
@@ -19,29 +21,41 @@ export async function getMoleculesByProperty(id){
 
 /**POST*/
 function addProperty(name, property){
+  const { accessToken } = Auth.getCurrentUser() || {};
   axios.post('/api/v1/chemicals/addProperty',{
     name,
-    property,
+    property},
+    {headers: {
+          Authorization: `Bearer ${accessToken}`,
+    }
   })
   return true;
 }
 
 async function deleteProperty(id){
+  const { accessToken } = Auth.getCurrentUser() || {};
   const molecules = await getMoleculesByProperty(id);
   if(molecules.length!==0){
     return false;
   }
   axios
   .post('/api/v1/chemicals/deleteProperty',{
-    id,
+    id},
+    {headers: {
+          Authorization: `Bearer ${accessToken}`,
+    }
   })
   return true;
 }
 
 function updateProperty(id, name){
+  const { accessToken } = Auth.getCurrentUser() || {};
   axios.post('/api/v1/chemicals/updateProperty',{
     id,
-    name,
+    name},
+    {headers: {
+          Authorization: `Bearer ${accessToken}`,
+    }
   })
   return true;
 }

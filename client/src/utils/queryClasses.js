@@ -1,5 +1,6 @@
 import axios from "axios";
 
+import Auth from "./authentication";
 
 /**GET*/
 export async function getAllClasses(){
@@ -46,30 +47,42 @@ export async function getMoleculesByClass(id){
 
 /**POST*/
 function addClass(name, higherID, level){
+  const { accessToken } = Auth.getCurrentUser() || {};
   axios.post('/api/v1/chemicals/addClass',{
     name,
     higherID,
-    level
+    level},
+    {headers: {
+          Authorization: `Bearer ${accessToken}`,
+    }
   })
   return true;
 }
 
 async function deleteClass(id){
+  const { accessToken } = Auth.getCurrentUser() || {};
   const molecules = await getMoleculesByClass(id);
   if(molecules.length!==0){
     return false;
   }
   axios
   .post('/api/v1/chemicals/deleteClass',{
-    id,
+    id},
+    {headers: {
+          Authorization: `Bearer ${accessToken}`,
+    }
   })
   return true;
 }
 
 function updateClass(id, name){
+  const { accessToken } = Auth.getCurrentUser() || {};
   axios.post('/api/v1/chemicals/updateClass',{
     id,
-    name,
+    name},
+    {headers: {
+          Authorization: `Bearer ${accessToken}`,
+    }
   })
   return true;
 }

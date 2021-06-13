@@ -1,5 +1,7 @@
 import axios from "axios";
 
+import Auth from "./authentication";
+
 /** GET */
 /**
  * Get a user information
@@ -31,24 +33,36 @@ export async function getUsers(){
 
 /** POST */
 function addUser(login, admin){
+  const { accessToken } = Auth.getCurrentUser() || {};
   axios.post('/api/v1/users/add',{
     login,
-    admin,
+    admin},
+    {headers: {
+          Authorization: `Bearer ${accessToken}`,
+    }
   })
   return true;
 }
 function deleteUser(selectedLogin){
+  const { accessToken } = Auth.getCurrentUser() || {};
   axios.post('/api/v1/users/delete',{
-    selectedLogin,
+    selectedLogin},
+    {headers: {
+          Authorization: `Bearer ${accessToken}`,
+    }
   })
   return true;
 }
 
 function updateUser(selectedLogin, newAdmin){
+  const { accessToken } = Auth.getCurrentUser() || {};
   newAdmin===true ? newAdmin=1 : newAdmin=0;
   axios.post('/api/v1/users/update',{
     selectedLogin,
-    newAdmin,
+    newAdmin},
+    {headers: {
+          Authorization: `Bearer ${accessToken}`,
+    }
   })
   return true;
 }

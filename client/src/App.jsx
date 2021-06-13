@@ -36,22 +36,22 @@ render() {
   		<BrowserRouter>
   		<TopBar />
   			<Switch>
-    			<Route path="/" component={Login}/>
+    			<Route exact path="/" component={Login}/>
     			<ProtectedRoute
             path="/menu"
-            onlyAdmin
+            exact
             component={() => (
             <Menu user={user} />
             )}
             />
-          <ProtectedRoute path="/user" onlyAdmin component={User}/>
-          <ProtectedRoute path="/property" onlyAdmin component={Property}/>
-          <ProtectedRoute path="/system" onlyAdmin component={System}/>
-          <ProtectedRoute path="/class" onlyAdmin component={Class}/>
-          <ProtectedRoute path="/keepClass" onlyAdmin component={KeepClass}/>
-          <ProtectedRoute path="/molecule" onlyAdmin component={Molecule}/>
-          <ProtectedRoute path="/editMolecule" onlyAdmin component={EditMolecule}/>
-          <ProtectedRoute path="/keepProperty" onlyAdmin component={KeepProperty}/>
+          <ProtectedRoute path="/user" component={User}/>
+          <ProtectedRoute path="/property" component={Property}/>
+          <ProtectedRoute path="/system" component={System}/>
+          <ProtectedRoute path="/class" component={Class}/>
+          <ProtectedRoute path="/keepClass" component={KeepClass}/>
+          <ProtectedRoute path="/molecule" component={Molecule}/>
+          <ProtectedRoute path="/editMolecule" component={EditMolecule}/>
+          <ProtectedRoute path="/keepProperty" component={KeepProperty}/>
   		  </Switch>
   		</BrowserRouter>
     </QueryClientProvider>

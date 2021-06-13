@@ -1,5 +1,6 @@
 import axios from "axios";
 
+import Auth from "./authentication";
 
 /**GET*/
 /**
@@ -54,29 +55,41 @@ export async function getMoleculesBySystem(id){
 
 /**POST*/
 function addSystem(name, higher){
+  const { accessToken } = Auth.getCurrentUser() || {};
   axios.post('/api/v1/chemicals/addSystem',{
     name,
-    higher,
+    higher},
+    {headers: {
+          Authorization: `Bearer ${accessToken}`,
+    }
   })
   return true;
 }
 
 async function deleteSystem(id){
+  const { accessToken } = Auth.getCurrentUser() || {};
   const molecules = await getMoleculesBySystem(id);
   if(molecules.length!==0){
     return false;
   }
   axios
   .post('/api/v1/chemicals/deleteSystem',{
-    id,
+    id},
+    {headers: {
+          Authorization: `Bearer ${accessToken}`,
+    }
   })
   return true;
 }
 
 function updateSystem(id, name){
+  const { accessToken } = Auth.getCurrentUser() || {};
   axios.post('/api/v1/chemicals/updateSystem',{
     id,
-    name,
+    name},
+    {headers: {
+          Authorization: `Bearer ${accessToken}`,
+    }
   })
   return true;
 }

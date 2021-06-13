@@ -1,5 +1,8 @@
 import axios from "axios";
 
+import Auth from "./authentication";
+
+
 /**GET */
 
 export async function getAllMolecules(){
@@ -34,22 +37,32 @@ export async function getAllMolecules(){
 
 /**POST*/
 
-function deleteMolecule(id){
+async function deleteMolecule(id){
+
+const { accessToken } = Auth.getCurrentUser() || {};
   axios
   .post('/api/v1/chemicals/deleteMolecule',{
-    id,
+    id },
+    {headers: {
+      Authorization: `Bearer ${accessToken}`,
+    }
   })
   return true;
 }
 
 function addMolecule(name){
+  const { accessToken } = Auth.getCurrentUser() || {};
   axios
   .post('/api/v1/chemicals/addMolecule',{
-    name,
+    name},
+    {headers: {
+      Authorization: `Bearer ${accessToken}`,
+    }
   })
 }
 
 function updateMolecule(id,name,diff,sy,cl,pr){
+  const { accessToken } = Auth.getCurrentUser() || {};
   axios
   .post('/api/v1/chemicals/updateMolecule',{
     id,
@@ -57,7 +70,10 @@ function updateMolecule(id,name,diff,sy,cl,pr){
     diff,
     sy,
     cl,
-    pr,
+    pr },
+    {headers: {
+        Authorization: `Bearer ${accessToken}`,
+    }
   })
 }
 
