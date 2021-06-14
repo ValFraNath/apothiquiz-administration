@@ -78,9 +78,13 @@ function updateMolecule(id,name,diff,sy,cl,pr){
 }
 
 function updateImage(file){
+  const { accessToken } = Auth.getCurrentUser() || {};
   axios
   .post('/api/v1/import/uniqueImage',{
-    file,
+    file},
+    {headers: {
+        Authorization: `Bearer ${accessToken}`,
+    }
   })
 }
 

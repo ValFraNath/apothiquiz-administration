@@ -25,12 +25,16 @@ const Class = (props) => {
   if(isLoading)
     return <></>;
 
+/** columns for material-ui DataGrid
+*/
   const columns = [
     { field: 'id', headerName: 'ID', width: 150},
     { field: 'cl_name', headerName: 'Nom', flex:'1', editable:true},
     { field: 'cl_higher', headerName: 'Parent', width:300},
   ];
 
+/** Show new class with Parent informations
+*/
   const showNewClass = () => {
     if(higherID===null){
       setName(props.location.state.name);
@@ -42,6 +46,8 @@ const Class = (props) => {
     )
   }
 
+/** Check validaty of the adding class
+*/
   const checkAddClass = () => {
     let apply = true;
     let level = 2;
@@ -70,6 +76,8 @@ const Class = (props) => {
     return apply;
   };
 
+/** Check if the class can be delete
+*/
   const checkDeleteClass = async () => {
     let apply = true;
     let nameToDelete = selectedName;

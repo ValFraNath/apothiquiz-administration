@@ -14,6 +14,8 @@ const KeepClass = (props) => {
   if(isLoading)
     return <></>;
 
+/** Keep classes with level 1 and 2
+*/
   let higherClasses=[];
     classes.forEach(parent=>{
       if(parent.cl_level!==3)

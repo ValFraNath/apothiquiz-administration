@@ -14,6 +14,8 @@ const EditMolecule = (props) => {
   const [addError, setAddError] = useState(null);
   const [redirectMol, setRedirectMol] = useState(false);
 
+  /** Set variables with props values
+  */
   const[id, setID] = useState('');
   if(props.location.state !==undefined && id===''){
     props.location.state.id!==undefined
@@ -72,6 +74,8 @@ const EditMolecule = (props) => {
   const { data: classes } = useQuery(["chemicals", "allClasses"]);
   const { data: properties } = useQuery(["chemicals", "property"]);
 
+  /** Columns for material-ui datagrid
+  */
   const columnsSystems = [
     { field: 'id', headerName: 'ID', width: 150},
     { field: 'sy_name', headerName: 'Nom', flex:'1'},
@@ -90,30 +94,39 @@ const EditMolecule = (props) => {
     { field: 'pr_name', headerName: 'Propriété', width:220 },
   ];
 
+/** Change url to component <img>
+*/
   const changeUrl = (e) => {
     const [file] = e.target.files;
-    console.log(file);
-    setImageFile(e.target.files);
     if (file){
       setUrl(URL.createObjectURL(file));
+      setImageFile(e.target.files[0]);
     }
   };
 
+/** Change value to show or not a datagrid with System selection
+*/
   const changeShowSystemDiv = () => {
     if(showSystemDiv===false)
       setShowSystemDiv(true);
   }
 
+/** Change value to show or not a datagrid with Class selection
+  */
   const changeShowClassDiv = () => {
     if(showClassDiv===false)
       setShowClassDiv(true);
   }
 
+/** Change value to show or not a datagrid with Property selection
+  */
   const changeShowPropDiv = () => {
     if(showPropDiv===false)
       setShowPropDiv(true);
   }
 
+/** Update all variables values
+*/
   const updateNameValue = (e) => {
     setName((e.target.value).trim());
   }
@@ -162,6 +175,8 @@ const EditMolecule = (props) => {
     setPropValue(selectedProp);
   }
 
+/** Check the changes and update molecule informations on db
+*/
   const updateMolecule = () => {
     if(name==='' || selectedClass==='null' || selectedClass==='' || selectedSystem==='' || selectedSystem==='null'){
       setAddError('⚠️ Merci de bien remplir tous les champs (Propriétés/image non obligatoire)');
@@ -192,10 +207,12 @@ const EditMolecule = (props) => {
           }
         })
       }
+      if(url!=='null'){
+         const data = new FormData();
+         data.append('file', imageFile);
+         Mo.updateImage(data.getAll('file'));
+      }
       Mo.updateMolecule(id, name, difficulty, systemID, classID, selectedPropID);
-      // if(url!=='null'){
-      //   Mo.updateImage(imageFile);
-      // }
       queryClient.invalidateQueries('chemicals');
       setRedirectMol(true);
   }

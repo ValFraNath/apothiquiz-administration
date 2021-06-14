@@ -27,6 +27,8 @@ const User = () => {
     { field: 'us_admin', headerName: 'Admin', type:'boolean',width:200, editable:true },
   ];
 
+  /** Check validaty of the adding user
+  */
   const checkUser = () => {
     let apply = true;
     if(login==='null' || login===''){

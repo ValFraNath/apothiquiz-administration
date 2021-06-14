@@ -27,12 +27,14 @@ const System = (props) => {
     { field: 'sy_higher', headerName: 'Parent', width:220 },
   ];
 
+/** Keep systems with level 1 */
   let higherSystems=['Aucun'];
   systems.forEach(parent=>{
     if(parent.sy_higher===null)
       higherSystems.push(parent.sy_name);
   });
 
+/** Keep ID corresponding at the system name*/
   const searchHigherNameByID = (nameHigher) => {
     systems.forEach(element => {
       if(element.sy_name===nameHigher)
@@ -42,6 +44,8 @@ const System = (props) => {
       setHigher(null);
   };
 
+  /** Check validaty of the adding system
+  */
   const checkAddSystem = () => {
     let apply = true;
     if(name===null || name===''){
@@ -75,6 +79,7 @@ const System = (props) => {
     return apply;
   };
 
+/** Check validaty of updates*/
   const checkUpdateSystem = (name) => {
     let apply = true;
     if(name.split('|--')[1]!==undefined){

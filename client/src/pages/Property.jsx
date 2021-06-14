@@ -33,6 +33,8 @@ const Property = () => {
     { field: 'pr_name', headerName: 'Propriété', width:220 },
   ];
 
+  /** Check validaty of the adding property
+  */
   const checkAddProperty = () => {
     let apply = true;
     if(name===null || name===''){
@@ -53,6 +55,8 @@ const Property = () => {
     return apply;
   };
 
+  /** Check validaty of updates
+  */
   const checkUpdateProperty = (name) => {
     let apply = true;
     if(name===""){

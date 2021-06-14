@@ -38,10 +38,14 @@ const Molecule = () => {
     { field: 'pv_name', headerName: 'Propriétés', width:500},
   ];
 
+/** Update value when the input changes
+*/
   const updateNewMoleculeName = (e) => {
     setNewMoleculeName(e.target.value.trim());
   }
 
+/** Redirect to edition page
+*/
   const editMolecule = () => {
     setRedirectEdit(true);
   }
@@ -65,6 +69,8 @@ const Molecule = () => {
     }
   }
 
+/** Update variables to show or not a message to confirm a molecule's updateSelection
+*/
   const updateWantToDelete = () => {
     wantToDelete ? setWantToDelete(false) : setWantToDelete(true);
     hideCancelB ? setHideCancelB(false) : setHideCancelB(true);
