@@ -16,12 +16,6 @@ const EditMolecule = (props) => {
 
   /** Set variables with props values
   */
-  const[id, setID] = useState('');
-  if(props.location.state !==undefined && id===''){
-    props.location.state.id!==undefined
-     ? setID(props.location.state.id.selectedID)
-     : setID(props.location.state.molecule.selectedData.id)
-  }
 
   const [name, setName] =  useState('');
   if(props.location.state !==undefined && name===''){
@@ -29,6 +23,13 @@ const EditMolecule = (props) => {
      ? setName(props.location.state.molecule.newMoleculeName)
      : setName(props.location.state.molecule.selectedData.mo_dci)
   }
+
+  const { data: molecules } = useQuery(["chemicals", "allMolecules"]);
+  const[id, setID] = useState('');
+  molecules.forEach(molecule=>{
+    if(id===''&&molecule.mo_dci===name)
+      setID(molecule.id);
+  });
 
   const [difficulty, setDifficulty] = useState(0);
   props.location.state!==undefined
@@ -182,6 +183,7 @@ const EditMolecule = (props) => {
       setAddError('⚠️ Merci de bien remplir tous les champs (Propriétés/image non obligatoire)');
       return;
     }
+
       let classID = selectedClassID;
       let systemID = selectedSystemID;
       if(classID==='null'){
@@ -210,7 +212,7 @@ const EditMolecule = (props) => {
       if(url!=='null'){
          const data = new FormData();
          data.append('file', imageFile);
-         Mo.updateImage(data.getAll('file'));
+         Mo.updateImage(data);
       }
       Mo.updateMolecule(id, name, difficulty, systemID, classID, selectedPropID);
       queryClient.invalidateQueries('chemicals');
