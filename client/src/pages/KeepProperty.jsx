@@ -63,7 +63,7 @@ const KeepProperty = (props) => {
          />
       </div>
       {props.location.state===undefined
-      ? <Redirect to='administration/menu'/>
+      ? <Redirect to='/menu'/>
       : <Link to={{pathname:url,state: {id: {selectedID}, property: {selectionNames}, idProperty: {selectionData}}}}><button id="valider">Valider</button></Link>
 
       }

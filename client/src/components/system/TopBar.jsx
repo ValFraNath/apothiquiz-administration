@@ -42,7 +42,7 @@ const OfflineBanner = () => {
         className="btn"
         onClick={async () => {
           await Auth.logout();
-          document.location.replace("/administration");
+          document.location.replace("/");
         }}
       >
         Déconnexion
@@ -58,7 +58,7 @@ const TopBar = () => (
       Espace Administrateur
     </h2>
     <h1>
-    <Link to='/administration/menu'>Apothiquiz</Link>
+    <Link to='/'>Apothiquiz</Link>
     </h1>
     <OfflineBanner />
   </nav>

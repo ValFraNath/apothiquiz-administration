@@ -151,7 +151,7 @@ const Class = (props) => {
       <label>Nom</label>
       <input type="text" id="name" ref={nameInput} placeholder="Nom" onChange={(e)=>setName(e.target.value.trim())}required />
       <label>Classe parent</label>
-      <Link to={{pathname:'/administration/keepClass',state: {value:{name}}}}><button id="class">Choisir classe parent</button></Link>
+      <Link to={{pathname:'/keepClass',state: {value:{name}}}}><button id="class">Choisir classe parent</button></Link>
       {props.location.state!==undefined && showNewClass()}
       <button id="valider" onClick={()=>checkAddClass() && queryClient.invalidateQueries('chemicals')}> Valider </button>
       {addError!==null && <FloatingError message={addError}/>}
