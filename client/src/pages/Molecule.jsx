@@ -115,8 +115,8 @@ const Molecule = () => {
       <input type="text" onChange={(e)=>updateNewMoleculeName(e)} placeholder="Nom"></input>
       {addError!==null && <FloatingError message={addError}/>}
       <button id="addM" onClick={checkAddMolecule}>Ajouter molécule</button>
-      {redirectAdd && <Redirect to={{pathname:'/editMolecule', state:{molecule:{newMoleculeName}}}}/>}
-      {redirectEdit && <Redirect to={{pathname:'/editMolecule', state:{molecule:{selectedData}}}}/>}
+      {redirectAdd && <Redirect to={{pathname:'editMolecule', state:{molecule:{newMoleculeName}}}}/>}
+      {redirectEdit && <Redirect to={{pathname:'editMolecule', state:{molecule:{selectedData}}}}/>}
     </div>
   );
 };
