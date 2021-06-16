@@ -33,7 +33,7 @@ render() {
 	const { user } = this.state;
 	return (
     <QueryClientProvider client={queryClient}>
-  		<BrowserRouter>
+  		<BrowserRouter basename={process.env.PUBLIC_URL}>
   		<TopBar />
   			<Switch>
     			<Route exact path="/" component={Login}/>
