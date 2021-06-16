@@ -293,10 +293,10 @@ const EditMolecule = (props) => {
     {url !== 'null' && <img src={url} id="formula" alt='formula'/>}
     <input type="file" id="fichier" accept=".png" onChange={(e)=>changeUrl(e)}/>
 
-    <Link to='molecule'><button id="cancel">Annuler</button></Link>
+    <Link to='/molecule'><button id="cancel">Annuler</button></Link>
     <button id="ok" onClick={()=>updateMolecule()}>Valider</button>
     {addError!==null && <FloatingError message={addError}/>}
-    {redirectMol && <Redirect to='molecule'/>}
+    {redirectMol && <Redirect to='/molecule'/>}
 
     </div>
   );

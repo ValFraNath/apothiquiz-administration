@@ -23,7 +23,7 @@ class Login extends Component {
     Auth.login(pseudoInput.value.trim(), passwordInput.value)
       .then((user) => {
         console.info(`User ${user} successfully logged in`);
-        document.location.replace("menu");
+        document.location.replace("/menu");
       })
       .catch((error) => {
         console.error(error);
@@ -44,7 +44,7 @@ class Login extends Component {
 
   render() {
     if (Auth.getCurrentUser() !== null) {
-      return <Redirect to="menu" />;
+      return <Redirect to="/menu" />;
     }
     return (
       this.state.isLogged || (
