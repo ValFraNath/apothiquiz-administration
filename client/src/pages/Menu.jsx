@@ -10,11 +10,11 @@ const Menu = ({ user }) => {
     <>
     <img src={connectionImg} alt ="connection"/>
     <div id="menu">
-        <Link to='./user'><button> Utilisateurs </button></Link>
-        <Link to='./molecule'><button> Molécules </button></Link>
-        <Link to='./property'><button> Propriétés (I, EI, IM) </button></Link>
-        <Link to='./system'><button> Systèmes </button></Link>
-        <Link to='./class'><button> Classes pharmacologiques </button></Link>
+        <Link to='/user'><button> Utilisateurs </button></Link>
+        <Link to='/molecule'><button> Molécules </button></Link>
+        <Link to='/property'><button> Propriétés (I, EI, IM) </button></Link>
+        <Link to='/system'><button> Systèmes </button></Link>
+        <Link to='/class'><button> Classes pharmacologiques </button></Link>
     </div>
     </>
   );

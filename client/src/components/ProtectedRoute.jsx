@@ -9,13 +9,13 @@ const ProtectedRoute = ({ component, onlyAdmin, ...rest }) => {
   const isAuthenticated = currentUser !== null;
 
   if (!isAuthenticated) {
-    return <Redirect to={{ pathname: "./" }} />;
+    return <Redirect to={{ pathname: "/" }} />;
   }
 
   const { isAdmin } = currentUser;
 
   if (onlyAdmin && !isAdmin) {
-    return <Redirect to={{ pathname: "./menu" }} />;
+    return <Redirect to={{ pathname: "/menu" }} />;
   }
 
   return <Route component={component} {...rest} />;

@@ -42,7 +42,7 @@ const OfflineBanner = () => {
         className="btn"
         onClick={async () => {
           await Auth.logout();
-          document.location.replace("./");
+          document.location.replace("/");
         }}
       >
         Déconnexion

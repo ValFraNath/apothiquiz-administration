@@ -51,8 +51,8 @@ const KeepClass = (props) => {
          />
       </div>
       {props.location.state===undefined
-      ? <Redirect to='./menu'/>
-      : <Link to={{pathname:'./class',state: {id: {selectedID}, name: props.location.state.value.name, class: {selectedName}}}}><button id="valider">Valider</button></Link>
+      ? <Redirect to='/menu'/>
+      : <Link to={{pathname:'/class',state: {id: {selectedID}, name: props.location.state.value.name, class: {selectedName}}}}><button id="valider">Valider</button></Link>
       }
     </div>
   );
