@@ -23,7 +23,7 @@ class Login extends Component {
     Auth.login(pseudoInput.value.trim(), passwordInput.value)
       .then((user) => {
         console.info(`User ${user} successfully logged in`);
-        document.location.replace("/menu");
+        document.location.replace(process.env.PUBLIC_URL+"/menu");
       })
       .catch((error) => {
         console.error(error);
