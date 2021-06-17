@@ -68,7 +68,7 @@ const EditMolecule = (props) => {
   && props.location.state!==undefined
     && props.location.state.molecule.selectedData!==undefined
      && props.location.state.molecule.selectedData.mo_image!==null
-        && setUrl('api/v1/files/images/'+props.location.state.molecule.selectedData.mo_image);
+        && setUrl('https://apothiquiz.univ-fcomte.fr/api/v1/files/images/'+props.location.state.molecule.selectedData.mo_image);
 
   const [showSystemDiv, setShowSystemDiv] = useState(false);
   const [showClassDiv, setShowClassDiv] = useState(false);
