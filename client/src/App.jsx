@@ -16,7 +16,6 @@ import Molecule from "./pages/Molecule";
 import Property from "./pages/Property";
 import System from "./pages/System";
 import User from "./pages/User";
-import * as serviceWorker from "./serviceWorker";
 import Auth from "./utils/authentication";
 import queryClient from "./utils/configuredQueryClient";
 
