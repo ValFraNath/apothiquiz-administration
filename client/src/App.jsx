@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { Component }from "react";
 import { QueryClientProvider } from "react-query";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
@@ -15,6 +16,7 @@ import Molecule from "./pages/Molecule";
 import Property from "./pages/Property";
 import System from "./pages/System";
 import User from "./pages/User";
+import * as serviceWorker from "./serviceWorker";
 import Auth from "./utils/authentication";
 import queryClient from "./utils/configuredQueryClient";
 
@@ -76,33 +78,33 @@ export default class App extends Component {
     serviceWorker.register();
   }
 
-  render() {
-  	const { user } = this.state;
-  	return (
-      <QueryClientProvider client={queryClient}>
-    		<BrowserRouter basename={process.env.PUBLIC_URL}>
-    		<TopBar />
-    			<Switch>
-      			<Route exact path="/" component={Login}/>
-      			<ProtectedRoute
-              path="/menu"
-              exact
-              onlyAdmin
-              component={() => (
-              <Menu user={user} />
-              )}
-              />
-            <ProtectedRoute path="/user" onlyAdmin component={User}/>
-            <ProtectedRoute path="/property" onlyAdmin component={Property}/>
-            <ProtectedRoute path="/system" onlyAdmin component={System}/>
-            <ProtectedRoute path="/class" onlyAdmin component={Class}/>
-            <ProtectedRoute path="/keepClass" onlyAdmin component={KeepClass}/>
-            <ProtectedRoute path="/molecule" onlyAdmin component={Molecule}/>
-            <ProtectedRoute path="/editMolecule" onlyAdmin component={EditMolecule}/>
-            <ProtectedRoute path="/keepProperty" onlyAdmin component={KeepProperty}/>
-    		  </Switch>
-    		</BrowserRouter>
-      </QueryClientProvider>
-  	);
-  }
+render() {
+	const { user } = this.state;
+	return (
+    <QueryClientProvider client={queryClient}>
+  		<BrowserRouter basename={process.env.PUBLIC_URL}>
+  		<TopBar />
+  			<Switch>
+    			<Route exact path="/" component={Login}/>
+    			<ProtectedRoute
+            path="/menu"
+            exact
+            onlyAdmin
+            component={() => (
+            <Menu user={user} />
+            )}
+            />
+          <ProtectedRoute path="/user" onlyAdmin component={User}/>
+          <ProtectedRoute path="/property" onlyAdmin component={Property}/>
+          <ProtectedRoute path="/system" onlyAdmin component={System}/>
+          <ProtectedRoute path="/class" onlyAdmin component={Class}/>
+          <ProtectedRoute path="/keepClass" onlyAdmin component={KeepClass}/>
+          <ProtectedRoute path="/molecule" onlyAdmin component={Molecule}/>
+          <ProtectedRoute path="/editMolecule" onlyAdmin component={EditMolecule}/>
+          <ProtectedRoute path="/keepProperty" onlyAdmin component={KeepProperty}/>
+  		  </Switch>
+  		</BrowserRouter>
+    </QueryClientProvider>
+	);
+}
 }
