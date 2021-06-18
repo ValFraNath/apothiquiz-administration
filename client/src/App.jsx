@@ -73,11 +73,6 @@ export default class App extends Component {
     };
   }
 
-  componentDidMount() {
-    // Install service-worker
-    serviceWorker.register();
-  }
-
 render() {
 	const { user } = this.state;
 	return (
