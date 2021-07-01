@@ -55,13 +55,6 @@ const EditMolecule = (props) => {
     });
   }
 
-  console.log(id);
-  console.log(difficulty);
-  console.log(selectedSystem);
-  console.log(selectedClass);
-  console.log(propValue);
-  console.log(url);
-
   const [showSystemDiv, setShowSystemDiv] = useState(false);
   const [showClassDiv, setShowClassDiv] = useState(false);
   const [showPropDiv, setShowPropDiv] = useState(false);
@@ -211,12 +204,7 @@ const EditMolecule = (props) => {
          data.append('file', imageFile);
          Mo.updateImage(data);
       }
-      console.log(id);
-      console.log(difficulty);
-      console.log(classID);
-      console.log(systemID);
-      console.log(selectedPropID);
-      console.log(url);
+
       Mo.updateMolecule(id, name, difficulty, systemID, classID, selectedPropID);
       queryClient.invalidateQueries('chemicals');
       setRedirectMol(true);
