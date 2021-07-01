@@ -22,6 +22,11 @@ const Class = (props) => {
   const [gridError, setGridError] = useState(null);
   const nameInput = useRef();
 
+  const [wantToDelete, setWantToDelete]= useState(false);
+  const [hideCancelB, setHideCancelB]= useState(true);
+  const [hideDeleteB, setHideDeleteB] = useState(true);
+  const refDelete = useRef(null);
+
   if(isLoading)
     return <></>;
 
@@ -44,6 +49,15 @@ const Class = (props) => {
     return (
       <p> - Nom de la classe : {name} / Classe parent sélectionnée : {higherName} </p>
     )
+  }
+
+  /** Update variables to show or not a message to confirm a class deletion
+  */
+  const updateWantToDelete = () => {
+    !wantToDelete && refDelete.current.scrollIntoView();
+    wantToDelete ? setWantToDelete(false) : setWantToDelete(true);
+    hideCancelB ? setHideCancelB(false) : setHideCancelB(true);
+    hideDeleteB ? setHideDeleteB(false) : setHideDeleteB(true);
   }
 
 /** Check validaty of the adding class
@@ -75,6 +89,13 @@ const Class = (props) => {
     props.location.state = undefined;
     return apply;
   };
+
+  const deleteClass = async () => {
+    updateWantToDelete()
+    await checkDeleteClass()
+    ? queryClient.invalidateQueries('chemicals')
+    : setGridError(' ⚠️ Vous ne pouvez pas supprimer cette classe car elle réfère au moins une molécule ou une autre classe')
+  }
 
 /** Check if the class can be delete
 */
@@ -125,7 +146,7 @@ const Class = (props) => {
         <GridDensitySelector/>
         <GridToolbarExport/>
         {selectedID !== 'null' &&
-          <button id="delete" className="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-textSizeSmall MuiButton-sizeSmall" onClick={async()=> await checkDeleteClass() ? queryClient.invalidateQueries('chemicals') : setGridError(' ⚠️ Vous ne pouvez pas supprimer cette classe car elle réfère au moins une molécule ou une autre classe')}>Supprimer</button>
+          <button id="delete" className="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-textSizeSmall MuiButton-sizeSmall" onClick={()=>updateWantToDelete()}>Supprimer</button>
         }
       </GridToolbarContainer>
     );
@@ -145,8 +166,12 @@ const Class = (props) => {
           onEditCellChangeCommitted={(e)=>checkUpdateClass(e.props.value.trim()) && queryClient.invalidateQueries('chemicals')}
         />
       </div>
+      <div ref={refDelete}>
+        {wantToDelete && <p>⚠️ Voulez-vous vraiment supprimer {selectedName} ? </p>}
+        {!hideDeleteB && <button id="deleteM" onClick={async()=>deleteClass()}style={{width:50}}>Oui</button>}
+        {!hideCancelB && <button id="cancelM" onClick={()=>updateWantToDelete()} style={{width:50,margin:5}}>Non</button>}
+      </div>
       {gridError!==null && <FloatingError message={gridError}/>}
-
       <h2> Ajouter une classe </h2>
       <label>Nom</label>
       <input type="text" id="name" ref={nameInput} placeholder="Nom" onChange={(e)=>setName(e.target.value.trim())}required />

@@ -24,51 +24,43 @@ const EditMolecule = (props) => {
      : setName(props.location.state.molecule.selectedData.mo_dci)
   }
 
-  const { data: molecules } = useQuery(["chemicals", "allMolecules"]);
-  const[id, setID] = useState('');
+    const { data: molecules } = useQuery(["chemicals", "allMolecules"]);
+    const[id, setID] = useState('');
+    const [difficulty, setDifficulty] = useState(0);
+
+    const [selectedSystem, setSelectedSystem]=useState('');
+    const [selectedSystemID, setSelectedSystemID] = useState('null');
+
+    const [selectedClass, setSelectedClass]=useState('');
+    const [selectedClassID, setSelectedClassID] = useState('null');
+
+    const [selectedProp, setSelectedProp]=useState([]);
+    const [selectedPropID, setSelectedPropID] = useState([]);
+    const [propValue, setPropValue] = useState('');
+
+    const [url, setUrl] = useState('null');
+    const [imageFile, setImageFile] = useState([]);
 
   if(molecules!==undefined){
     molecules.forEach(molecule=>{
-      if(id===''&&molecule.mo_dci===name)
+      if(id===''&&molecule.mo_dci===name){
         setID(molecule.id);
+        setDifficulty(molecule.mo_difficulty);
+        setSelectedSystem(molecule.sy_name);
+        setSelectedClass(molecule.cl_name);
+        setPropValue(molecule.pv_name);
+        if(molecule.mo_image!==null)
+          setUrl(molecule.mo_image);
+      }
     });
   }
 
-  const [difficulty, setDifficulty] = useState(0);
-  props.location.state!==undefined
-   && props.location.state.molecule.selectedData!==undefined
-    && props.location.state.molecule.selectedData.mo_difficulty!==difficulty
-     && setDifficulty(props.location.state.molecule.selectedData.mo_difficulty);
-
-  const [selectedSystem, setSelectedSystem]=useState('');
-  const [selectedSystemID, setSelectedSystemID] = useState('null');
-  selectedSystem===''
-  && props.location.state!==undefined
-   && props.location.state.molecule.selectedData!==undefined
-    && setSelectedSystem(props.location.state.molecule.selectedData.sy_name);
-
-  const [selectedClass, setSelectedClass]=useState('');
-  const [selectedClassID, setSelectedClassID] = useState('null');
-  selectedClass===''
-  && props.location.state!==undefined
-   && props.location.state.molecule.selectedData!==undefined
-    && setSelectedClass(props.location.state.molecule.selectedData.cl_name);
-
-  const [selectedProp, setSelectedProp]=useState([]);
-  const [selectedPropID, setSelectedPropID] = useState([]);
-  const [propValue, setPropValue] = useState('');
-  propValue===''
-  && props.location.state!==undefined
-   && props.location.state.molecule.selectedData!==undefined
-    && setPropValue(props.location.state.molecule.selectedData.pv_name);
-
-  const [url, setUrl] = useState('null');
-  const [imageFile, setImageFile] = useState([]);
-  url==='null'
-  && props.location.state!==undefined
-    && props.location.state.molecule.selectedData!==undefined
-     && props.location.state.molecule.selectedData.mo_image!==null
-        && setUrl('https://apothiquiz.univ-fcomte.fr/api/v1/files/images/'+props.location.state.molecule.selectedData.mo_image);
+  console.log(id);
+  console.log(difficulty);
+  console.log(selectedSystem);
+  console.log(selectedClass);
+  console.log(propValue);
+  console.log(url);
 
   const [showSystemDiv, setShowSystemDiv] = useState(false);
   const [showClassDiv, setShowClassDiv] = useState(false);
@@ -182,11 +174,13 @@ const EditMolecule = (props) => {
 /** Check the changes and update molecule informations on db
 */
   const updateMolecule = () => {
-    if(name==='' || selectedClass==='null' || selectedClass==='' || selectedSystem==='' || selectedSystem==='null'){
+    if(name==='' || selectedClass===''|| selectedSystem===''){
       setAddError('⚠️ Merci de bien remplir tous les champs (Propriétés/image non obligatoire)');
       return;
     }
-
+    if(propValue===''){
+      setPropValue('null');
+    }
       let classID = selectedClassID;
       let systemID = selectedSystemID;
       if(classID==='null'){
@@ -217,6 +211,12 @@ const EditMolecule = (props) => {
          data.append('file', imageFile);
          Mo.updateImage(data);
       }
+      console.log(id);
+      console.log(difficulty);
+      console.log(classID);
+      console.log(systemID);
+      console.log(selectedPropID);
+      console.log(url);
       Mo.updateMolecule(id, name, difficulty, systemID, classID, selectedPropID);
       queryClient.invalidateQueries('chemicals');
       setRedirectMol(true);

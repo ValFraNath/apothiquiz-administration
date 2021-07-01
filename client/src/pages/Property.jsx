@@ -17,6 +17,11 @@ const Property = () => {
   const [gridError, setGridError] = useState(null);
   const nameInput = useRef();
 
+  const [wantToDelete, setWantToDelete]= useState(false);
+  const [hideCancelB, setHideCancelB]= useState(true);
+  const [hideDeleteB, setHideDeleteB] = useState(true);
+  const refDelete = useRef(null);
+
   if(isLoading)
     return <></>;
 
@@ -32,6 +37,15 @@ const Property = () => {
     { field: 'pv_name', headerName: 'Nom', flex:'1', editable:true },
     { field: 'pr_name', headerName: 'Propriété', width:220 },
   ];
+
+  /** Update variables to show or not a message to confirm a property deletion
+  */
+  const updateWantToDelete = () => {
+    !wantToDelete && refDelete.current.scrollIntoView();
+    wantToDelete ? setWantToDelete(false) : setWantToDelete(true);
+    hideCancelB ? setHideCancelB(false) : setHideCancelB(true);
+    hideDeleteB ? setHideDeleteB(false) : setHideDeleteB(true);
+  }
 
   /** Check validaty of the adding property
   */
@@ -74,6 +88,13 @@ const Property = () => {
     return apply;
   };
 
+  const deleteProperty = async() => {
+    updateWantToDelete()
+    await Pv.deleteProperty(selectedID)
+    ? queryClient.invalidateQueries('chemicals')
+    : setGridError(' ⚠️ Vous ne pouvez pas supprimer cette propriété car elle appartient à une ou plusieurs molécule(s)')
+  }
+
   const CustomToolbar = () => {
     return (
       <GridToolbarContainer>
@@ -82,7 +103,7 @@ const Property = () => {
         <GridToolbarExport/>
         {selectedID !== null &&
           <button id="delete" className="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-textSizeSmall MuiButton-sizeSmall"
-          onClick={async()=>await Pv.deleteProperty(selectedID) ? queryClient.invalidateQueries('chemicals') : setGridError(' ⚠️ Vous ne pouvez pas supprimer cette propriété car elle appartient à une ou plusieurs molécule(s)')}>Supprimer</button>
+          onClick={()=>updateWantToDelete()}>Supprimer</button>
         }
       </GridToolbarContainer>
     );
@@ -102,8 +123,12 @@ const Property = () => {
           onEditCellChangeCommitted={(e)=>checkUpdateProperty(e.props.value.trim()) && queryClient.invalidateQueries('chemicals')}
         />
       </div>
+      <div ref={refDelete}>
+        {wantToDelete && <p>⚠️ Voulez-vous vraiment supprimer {selectedName} ? </p>}
+        {!hideDeleteB && <button id="deleteM" onClick={async()=>deleteProperty()}style={{width:50}}>Oui</button>}
+        {!hideCancelB && <button id="cancelM" onClick={()=>updateWantToDelete()} style={{width:50,margin:5}}>Non</button>}
+      </div>
       {gridError!==null && <FloatingError message={gridError}/>}
-
       <h2> Ajouter une propriété </h2>
       <label>Nom</label>
       <input type="text" id="name" placeholder="Nom" ref={nameInput} onChange={(e)=>setName(e.target.value.trim())} required />

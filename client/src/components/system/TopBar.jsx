@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import React, { useState, useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
 
+import logo from "../../images/apothiquiz.png";
 import connectionAnim from "../../images/sprites/network-status-60.png";
 import Auth from "../../utils/authentication";
 import AnimTransition from "../animations/AnimTransition";
@@ -57,9 +58,7 @@ const TopBar = () => (
     <h2>
       Espace Administrateur
     </h2>
-    <h1>
-    <Link to='/'>Apothiquiz</Link>
-    </h1>
+    <Link to='/'><img src={logo} alt='Apothiquiz'/></Link>
     <OfflineBanner />
   </nav>
 );

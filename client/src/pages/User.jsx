@@ -18,6 +18,11 @@ const User = () => {
   const loginInput = useRef();
   const adminInput = useRef();
 
+  const [wantToDelete, setWantToDelete]= useState(false);
+  const [hideCancelB, setHideCancelB]= useState(true);
+  const [hideDeleteB, setHideDeleteB] = useState(true);
+  const refDelete = useRef(null);
+
   if(isLoading)
     return <></>;
 
@@ -26,6 +31,20 @@ const User = () => {
     { field: 'us_login', headerName: 'Login', flex:'1'},
     { field: 'us_admin', headerName: 'Admin', type:'boolean',width:200, editable:true },
   ];
+
+  /** Update variables to show or not a message to confirm an user deletion
+  */
+  const updateWantToDelete = () => {
+    !wantToDelete && refDelete.current.scrollIntoView();
+    wantToDelete ? setWantToDelete(false) : setWantToDelete(true);
+    hideCancelB ? setHideCancelB(false) : setHideCancelB(true);
+    hideDeleteB ? setHideDeleteB(false) : setHideDeleteB(true);
+  }
+
+  const deleteUser = () => {
+    updateWantToDelete();
+    Users.deleteUser(selectedLogin) && queryClient.invalidateQueries('users');
+  }
 
   /** Check validaty of the adding user
   */
@@ -55,7 +74,7 @@ const User = () => {
         <GridDensitySelector/>
         <GridToolbarExport/>
         {selectedLogin !== 'null' &&
-          <button id="delete" className="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-textSizeSmall MuiButton-sizeSmall" onClick={()=> Users.deleteUser(selectedLogin) && queryClient.invalidateQueries('users')}>Supprimer</button>
+          <button id="delete" className="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-textSizeSmall MuiButton-sizeSmall" onClick={()=>updateWantToDelete()}>Supprimer</button>
         }
       </GridToolbarContainer>
     );
@@ -67,6 +86,11 @@ const User = () => {
       <div id="grid">
         <DataGrid hideFooterSelectedRowCount={true} density='compact' rows={users} columns={columns} components={{
             Toolbar: CustomToolbar}} onRowSelected={(e)=>setSelectedLogin(e.data.us_login)} onEditCellChangeCommitted={(e)=>Users.updateUser(selectedLogin, e.props.value) && queryClient.invalidateQueries('users')}/>
+      </div>
+      <div ref={refDelete}>
+        {wantToDelete && <p>⚠️ Voulez-vous vraiment supprimer {selectedLogin} ? </p>}
+        {!hideDeleteB && <button id="deleteM" onClick={async()=>deleteUser()}style={{width:50}}>Oui</button>}
+        {!hideCancelB && <button id="cancelM" onClick={()=>updateWantToDelete()} style={{width:50,margin:5}}>Non</button>}
       </div>
       <h2> Ajouter un utilisateur </h2>
       <label>Login</label>

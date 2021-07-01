@@ -11,11 +11,11 @@ export async function getAllMolecules(){
     molecule['id'] = molecule['mo_id'];
     delete molecule['mo_id'];
     if(molecule['sy_name']===null)
-      molecule['sy_name']='null';
+      molecule['sy_name']='';
     if(molecule['cl_name']===null)
-      molecule['cl_name']='null';
+      molecule['cl_name']='';
     if(molecule['pv_name']===null)
-      molecule['pv_name']='null';
+      molecule['pv_name']='';
     data.map((sameMolecule) => {
       if(molecule['id']===sameMolecule['id']&&molecule!==sameMolecule&&sameMolecule['pv_name']!==undefined){
         molecule['pv_name'] += " | "+sameMolecule['pv_name'];
